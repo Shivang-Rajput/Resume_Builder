@@ -55,6 +55,11 @@ const initialResume = {
 const accentOptions = ['#2563eb', '#7c3aed', '#0f766e', '#dc2626', '#000000'];
 const storageKey = 'resume-builder-custom-templates';
 
+const formatUrl = (url) => {
+  if (!url) return '';
+  return url.startsWith('http://') || url.startsWith('https://') ? url : `https://${url}`;
+};
+
 function ResumeDocument({ resumeData, templateDefinition }) {
   const styles = StyleSheet.create({
     page: {
@@ -115,9 +120,9 @@ function ResumeDocument({ resumeData, templateDefinition }) {
                 {showSection('skills') ? <><Text style={styles.sectionTitle}>Skills</Text><Text style={styles.paragraph}>{resumeData.skills}</Text></> : null}
                 {showSection('certifications') ? <><Text style={styles.sectionTitle}>Certifications</Text><Text style={styles.paragraph}>{resumeData.certifications}</Text></> : null}
                 <Text style={styles.sectionTitle}>Links</Text>
-                <Link src={`https://${resumeData.personal.website}`} style={styles.paragraph}>{resumeData.personal.website}</Link>
-                <Link src={`https://${resumeData.personal.github}`} style={styles.paragraph}>{resumeData.personal.github}</Link>
-                <Link src={`https://${resumeData.personal.linkedin}`} style={styles.paragraph}>{resumeData.personal.linkedin}</Link>
+                {resumeData.personal.website ? <Link src={formatUrl(resumeData.personal.website)} style={styles.paragraph}>{resumeData.personal.website}</Link> : null}
+                {resumeData.personal.github ? <Link src={formatUrl(resumeData.personal.github)} style={styles.paragraph}>{resumeData.personal.github}</Link> : null}
+                {resumeData.personal.linkedin ? <Link src={formatUrl(resumeData.personal.linkedin)} style={styles.paragraph}>{resumeData.personal.linkedin}</Link> : null}
               </View>
             </>
           ) : (
